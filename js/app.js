@@ -29,7 +29,16 @@ jQuery(document).ready(function() {
     },
   };
 
+
+
   var payframeClient = new LitlePayframeClient(configure);
 
-  setTimeout(payframeClient.autoAdjustHeight, 100);
+  setTimeout(payframeClient.autoAdjustHeight, 400);
+
+  // add submit handler
+  $("#regButton").click(function(e) {
+    console.log('button selected');
+    var msg = {id: "1234", orderId: "5678"};
+    payframeClient.getPaypageRegistrationId(msg);
+  });                           
 });
