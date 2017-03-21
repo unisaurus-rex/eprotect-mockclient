@@ -24,7 +24,9 @@ var eventHandler = function (e) {
     var iframe = document.getElementById("vantiv-payframe");
     iframe.height = response.height;
   }
-  else {
+  else if (response.inputsEmpty) {
+    configFromMerchant.inputsEmptyCallback(response);
+  } else {
     configFromMerchant.callback(response);
   }
 };
@@ -73,6 +75,13 @@ var LitlePayframeClient = function (configuration) {
     autoAdjustHeight : function () {
       console.log("payframe-client.js: autoAdjustHeight");
       var message = {"action":"getDocHeight"};
+      var payframe = document.getElementById("vantiv-payframe").contentWindow;
+      payframe.postMessage(JSON.stringify(message), "*");
+    },
+
+    allInputsEmpty: function() {
+      console.log("payframe-client.js: allInputsEmpty");
+      var message = {"action":"allInputsEmpty"};
       var payframe = document.getElementById("vantiv-payframe").contentWindow;
       payframe.postMessage(JSON.stringify(message), "*");
     }

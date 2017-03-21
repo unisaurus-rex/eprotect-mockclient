@@ -12,6 +12,11 @@ jQuery(document).ready(function() {
     console.log(res);
   }
 
+  function inputsEmptyCallback(res) {
+    console.log("inputsEmptyCallback: message received");
+    console.log(res);
+  }
+
   var configure = {
     paypageId: "myregistrationid",
     style: "test",
@@ -19,6 +24,7 @@ jQuery(document).ready(function() {
     timeout: "5000",
     div: "payframe",
     callback: payframeClientCallback,
+    inputsEmptyCallback: inputsEmptyCallback,
     showCvv: true,
     numYears: 8,
     tabIndex: {
@@ -34,6 +40,10 @@ jQuery(document).ready(function() {
   var payframeClient = new LitlePayframeClient(configure);
 
   setTimeout(payframeClient.autoAdjustHeight, 400);
+
+  window.inputsEmpty = function() {
+    payframeClient.allInputsEmpty();
+  };
 
   // add submit handler
   $("#regButton").click(function(e) {
